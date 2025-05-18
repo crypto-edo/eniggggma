@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gioco a livelli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .level {
+            display: none;
+        }
+        .level.active {
+            display: block;
+        }
+        .hidden-answer {
+            color: white;
+            background: white;
+            cursor: pointer;
+        }
+        .hidden-answer:hover {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div id="level1" class="level active">
+        <h1>Livello 1</h1>
+        <p>Trova la parola nascosta per passare al livello successivo:</p>
+        <p>La risposta è <span class="hidden-answer">mela</span></p>
+        <input type="text" id="answer1" placeholder="Inserisci la risposta">
+        <button onclick="checkAnswer(1)">Verifica</button>
+    </div>
+
+    <div id="level2" class="level">
+        <h1>Livello 2</h1>
+        <p>Complimenti! Hai trovato la prima risposta.</p>
+        <p>La prossima risposta sta dove ciò che fluttua viene spiegato.</p>
+        <!-- La risposta è nascosta nel commento HTML: "gatto" -->
+        <input type="text" id="answer2" placeholder="Inserisci la risposta">
+        <button onclick="checkAnswer(2)">Verifica</button>
+    </div>
+
+    <div id="level3" class="level">
+        <h1>Livello 3</h1>
+        <p>Ottimo lavoro! La prossima risposta sta dove gli errori vengono a galla.</p>
+        <input type="text" id="answer3" placeholder="Inserisci la risposta">
+        <button onclick="checkAnswer(3)">Verifica</button>
+    </div>
+
+    <div id="final-screen" class="level">
+        <h1>Hai completato tutti i livelli!</h1>
+        <p>Complimenti, sei un vero detective del web!</p>
+    </div>
+
+    <script>
+        // Risposta per il livello 3 (visibile nel console.log)
+        console.log("La risposta per il livello 3 è: sole");
+
+        function checkAnswer(level) {
+            let answers = {
+                1: "mela",
+                2: "gatto",
+                3: "sole"
+            };
+            
+            let userAnswer = document.getElementById(`answer${level}`).value.toLowerCase();
+            
+            if(userAnswer === answers[level]) {
+                // Nascondi il livello corrente
+                document.getElementById(`level${level}`).classList.remove('active');
+                
+                // Mostra il prossimo livello o la schermata finale
+                if(level < 3) {
+                    document.getElementById(`level${level+1}`).classList.add('active');
+                } else {
+                    document.getElementById('final-screen').classList.add('active');
+                }
+            } else {
+                alert("Risposta errata, riprova!");
+            }
+        }
+    </script>
+</body>
+</html>
