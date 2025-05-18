@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livelli Segreti</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- ==================== LIVELLO 1 ==================== -->
+    <h1 id="mainTitle">Avvolte bisogna cercare ciò che non si vede davanti ai nostri occhi</h1>
+    
+    <input type="text" id="secretInput" placeholder="Scrivi la parola segreta..." autocomplete="off">
+    <div id="message"></div>
+    
+    <div id="hiddenStars" class="hidden-text"></div>
+    <div id="hiddenFooter" class="footer">espressioni nascoste</div>
+
+    <!-- ==================== LIVELLO 2 (NASCOSTO INIZIALMENTE) ==================== -->
+    <div id="hiddenMorse" class="morse-text">
+        -.-. --- -. ...- . .-. ... .- --.. .. --- -. .. / ... - ..- .--. .. -.. . --..-- / .--. .- .-. --- .-.. . / .. -. ... . -. ... .- - . / # -. / ... --- ... - .- -. --.. . / .- ... ... ..- -. - . --..-- / . .-. .-. --- .-. .. / -.-. --- -- -- . ... ... .. / # -. / . - .--.- / -... .-. . ...- . --..-- / . ... .--. . .-. .. . -. --.. .- / -. ..- .-.. .-.. .- / # -. / .--. .- ... ... .- - . -- .--. .. / ... - ..- .--. .. -.. .. --..-- / .. -. - . .-. . ... ... .. / .. -. ... . -. ... .- - ..
+    </div>
+
+    <!-- ==================== TRANSIZIONE ==================== -->
+    <div id="levelTransition" class="level-transition" style="display: none;">
+        <h1>Livello Completato!</h1>
+        <p>Caricamento prossimo livello...</p>
+    </div>
+
+    <script>
+        // ==================== INIZIALIZZAZIONE ====================
+        document.addEventListener('DOMContentLoaded', function() 
+        {
+            initializeLevel1();
+        });
+
+
+        // ==================== LIVELLO 1 ====================
+        function initializeLevel1() 
+        {
+            generateStars();
+            setupInputCheckLevel1();
+            setupProtections();
+        }
+
+        function generateStars() 
+        {
+            const hiddenStars = document.getElementById('hiddenStars');
+            const chars = ['·', '*', '·', '·', '*'];
+            const starCount = 200;
+            
+            hiddenStars.innerHTML = '';
+            
+            for (let i = 0; i < starCount; i++) 
+            {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.textContent = chars[Math.floor(Math.random() * chars.length)];
+                
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.fontSize = `${Math.random() * 0.5 + 0.8}em`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                hiddenStars.appendChild(star);
+            }
+        }
+
+        function setupInputCheckLevel1() 
+        {
+            const secretInput = document.getElementById('secretInput');
+            const message = document.getElementById('message');
+            
+            secretInput.addEventListener('input', function() 
+            {
+                const inputValue = secretInput.value.toLowerCase().trim();
+                
+                if (inputValue === 'espressioni nascoste') 
+                {
+                    message.className = 'success';
+                    secretInput.style.display = 'none';
+                    message.textContent = '                       ';
+                    
+                    startLevelTransition();
+                } 
+                else if (inputValue.length < 20) 
+                {
+                    message.textContent = 'Parola errata, riprova!';
+                    message.className = 'error';
+                } 
+                else
+                {
+                    message.textContent = 'analizza ciò che vedi';
+                }
+            });
+        }
+
+
+        // ==================== TRANSIZIONE ====================
+        function startLevelTransition() 
+        {
+            const transition = document.getElementById('levelTransition');
+            transition.style.display = 'flex';
+            
+            setTimeout(function() 
+            {
+                transition.style.opacity = '0';
+                
+                setTimeout(function() 
+                {
+                    transition.style.display = 'none';
+                    startLevel2();
+                }, 1000);
+                
+            }, 1500);
+        }
+
+
+        // ==================== LIVELLO 2 ====================
+        function startLevel2() 
+        {
+            // Transizione sfondo da nero a bianco
+            document.body.style.backgroundColor = 'white';
+            
+            // Modifica titolo e testo
+            document.getElementById('mainTitle').textContent = 'Trova il secondo messaggio nascosto';
+            document.getElementById('mainTitle').classList.add('black-text');
+            
+            // Nascondi "espressioni nascoste"
+            document.getElementById('hiddenFooter').style.opacity = '0';
+            
+            // Mostra codice morse (nero su bianco, selezionabile)
+            setTimeout(function() 
+            {
+                document.getElementById('hiddenMorse').style.opacity = '1'; // Cambiato da 0 a 1
+                setupInputCheckLevel2();
+                
+                // Configura input per livello 2
+                const secretInput = document.getElementById('secretInput');
+                secretInput.value = '';
+                secretInput.placeholder = 'Inserisci la parola corretta';
+                secretInput.style.display = 'block';
+                secretInput.style.border = '1px solid black';
+                secretInput.style.color = 'black';
+                secretInput.style.background = 'rgba(255, 255, 255, 0.2)';
+            }, 1000);
+        }
+
+        function setupInputCheckLevel2() 
+        {
+            const secretInput = document.getElementById('secretInput');
+            const message = document.getElementById('message');
+            
+            secretInput.addEventListener('input', function() 
+            {
+                const inputValue = secretInput.value.toLowerCase().trim();
+                
+                if (inputValue === 'adolescenza') 
+                {
+                    message.textContent = 'Complimenti! Hai decifrato il codice! 🎉';
+                    message.className = 'success';
+                    secretInput.style.display = 'none';
+                    message.textContent = 'beh il resto è work in progress, però se sei arrivato qui vuol dire che tutto funziona :)';
+                    
+                    // Preparazione per il livello 3
+                    /*
+                    setTimeout(function() 
+                    {
+                        document.body.innerHTML = '<h1>Livello 3</h1><p>ehm, work in progress penso...</p>';
+                    }, 1500);
+                    */
+                } 
+                else if (inputValue.length > 11 || inputValue.length < 11) 
+                {
+                    message.textContent = 'Soluzione errata, riprova!';
+                    message.className = 'error';
+                } 
+                else 
+                {
+                    message.textContent = 'suggerimento: periodo?';
+                }
+            });
+        }
+
+
+        // ==================== PROTEZIONI ====================
+        function setupProtections() 
+        {
+            document.addEventListener('contextmenu', function(e) 
+            {
+                e.preventDefault();
+                return false;
+            });
+
+            document.addEventListener('keydown', function(e) 
+            {
+                if (e.key === 'F12' || 
+                   (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                   (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+                   (e.ctrlKey && e.key === 'U')) 
+                {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
