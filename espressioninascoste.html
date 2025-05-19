@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livello 2 - Livelli Segreti</title>
+    <style>
+        body 
+        {
+            background-color: white;
+            color: black;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            transition: background-color 2s ease-in-out;
+        }
+        .morse-text 
+        {
+            color: white;
+            opacity: 0;
+            user-select: text;
+            font-size: 7px;
+            line-height: 1.5;
+        }
+        #secretInput 
+        {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid black;
+            color: black;
+            font-size: 1em;
+            padding: 10px;
+            margin-top: 20px;
+            width: 250px;
+            text-align: center;
+            border-radius: 5px;
+            z-index: 1;
+            transition: all 1s ease-in-out;
+        }
+        #message 
+        {
+            margin-top: 20px;
+            min-height: 24px;
+            font-size: 1.2em;
+            z-index: 1;
+            transition: color 1s ease-in-out;
+        }
+        .success 
+        {
+            color: gold;
+            text-shadow: 0 0 5px gold;
+        }
+        .error 
+        {
+            color: red;
+            text-shadow: 0 0 5px darkred;
+            animation: shake 0.5s;
+        }
+        @keyframes shake 
+        {
+            0%, 100% 
+            { 
+                transform: translateX(0); 
+            }
+            20%, 60% 
+            { 
+                transform: translateX(-5px); 
+            }
+            40%, 80% 
+            { 
+                transform: translateX(5px); 
+            }
+        }
+        #mainTitle 
+        {
+            font-weight: bold;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            transition: color 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="mainTitle">Trova il secondo messaggio nascosto</h1>
+    <div id="hiddenMorse" class="morse-text">
+. ... .--. .-. . ... ... .. --- -. .. / ... - ..- .--. .. -.. . --..-- / .--. .- .-. --- .-.. . / .. -. ... . -. ... .- - . --..-- / .--. ..- -. - --- --..-- / ... --- ... - .- -. --.. . / .- ... ... ..- -. - . --..-- / . .-. .-. --- .-. .. / -.-. --- -- -- . ... ... .. --..-- / .--. ..- -. - --- --..-- / . - .- .----. / -... .-. . ...- . --..-- / . ... .--. . .-. .. . -. --.. .- / -. ..- .-.. .-.. .- --..-- / .--. ..- -. - --- --..-- / .--. .- ... ... .- - . -- .--. .. / ... - ..- .--. .. -.. .. --..-- / .. -. - . .-. . ... ... .. / .. -. ... . -. ... .- - .. --..-- / .--. ..- -. - ---  
+    </div>
+    <input type="text" id="secretInput" placeholder="Inserisci la parola corretta" autocomplete="off">
+    <div id="message"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function()
+        {
+            generateStars();
+            initializeLevel2();
+        });
+
+        function generateStars()
+        {
+            let starsContainer = document.getElementById('hiddenStars');
+            if (!starsContainer)
+            {
+                starsContainer = document.createElement('div');
+                starsContainer.id = 'hiddenStars';
+                starsContainer.style.position = 'fixed';
+                starsContainer.style.top = 0;
+                starsContainer.style.left = 0;
+                starsContainer.style.width = '100vw';
+                starsContainer.style.height = '100vh';
+                starsContainer.style.pointerEvents = 'none';
+                starsContainer.style.zIndex = 1;
+                document.body.appendChild(starsContainer);
+            }
+            const chars = ['·', '*', '·', '·', '*'];
+            const starCount = 1000;
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < starCount; i++)
+            {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.fontSize = `${Math.random() * 0.5 + 0.8}em`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                star.style.color = 'black';
+                star.textContent = chars[Math.floor(Math.random() * chars.length)];
+                starsContainer.appendChild(star);
+            }
+        }
+        function initializeLevel2() 
+        {
+            document.getElementById('hiddenMorse').style.opacity = '1';
+            setupInputCheckLevel2();
+        }
+
+        function setupInputCheckLevel2() 
+        {
+            const secretInput = document.getElementById('secretInput');
+            const message = document.getElementById('message');
+            secretInput.addEventListener('input', function()
+            {
+                const inputValue = secretInput.value.toLowerCase().trim();
+                if (inputValue === 'adolescenza') 
+                {
+                    message.textContent = 'Periodo giusto';
+                    message.className = '';
+                    message.style.color = 'green';
+                    secretInput.style.display = 'none';
+                    setTimeout(function()
+                    {
+                        document.body.innerHTML = '<h1>Livello 3</h1><p>ehm, work in progress penso...</p>';
+                    }, 1500);
+                } 
+                else if (inputValue.length !== 11) 
+                {
+                    message.textContent = 'Soluzione errata, riprova!';
+                    message.className = 'error';
+                    message.style.color = '';
+                } 
+                else 
+                {
+                    message.textContent = 'suggerimento: periodo?';
+                    message.className = '';
+                    message.style.color = '';
+                }
+            });
+        }
+        document.addEventListener('keydown', function(e)
+        {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'U')
+            )
+            {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
