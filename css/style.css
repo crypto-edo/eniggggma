@@ -1,0 +1,177 @@
+/* MAIN PAGINA */
+
+body
+{
+    font-family: 'Georgia', serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    transition: background-color 2s ease-in-out;
+}
+/* LVL 1 */
+body.LVL1
+{
+    background-color: black;
+    color: white;
+    
+}
+
+.star 
+{
+    position: absolute;
+    font-size: 16px;
+}
+
+.footer 
+{
+    position: fixed;
+    bottom: 20px;
+    color: black;
+    font-size: 14px;
+    z-index: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+#espressioniNascoste
+{
+    color: black; 
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 2; 
+    user-select: text;
+}
+
+.hidden-text 
+{
+    color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    user-select: text; /* Permette la selezione anche da mobile */
+}
+
+#lvl1Title 
+{
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    z-index: 1;
+    transition: color 2s ease-in-out;
+}
+
+#secretInputLVL1
+{
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
+    color: white;
+    font-size: 1em;
+    padding: 10px;
+    margin-top: 20px;
+    width: 250px;
+    text-align: center;
+    border-radius: 5px;
+    z-index: 1;
+    transition: all 1s ease-in-out;
+}
+
+.level-transition 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+/* LVL 2 */
+body.LVL2
+{
+    background-color: white;
+    color: black;
+}
+
+#lvl2Title 
+{
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    transition: color 2s ease-in-out;
+}
+
+.morse-text 
+{
+    color: white;
+    opacity: 0;
+    user-select: text;
+    font-size: 7px;
+    line-height: 1.5;
+}
+
+#secretInputLVL2
+{
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid black;
+    color: black;
+    font-size: 1em;
+    padding: 10px;
+    margin-top: 20px;
+    width: 250px;
+    text-align: center;
+    border-radius: 5px;
+    z-index: 1;
+    transition: all 1s ease-in-out;
+}
+
+/* CONDIVISE */
+
+#message 
+{
+    margin-top: 20px;
+    min-height: 24px;
+    font-size: 1.2em;
+    z-index: 1;
+    transition: color 1s ease-in-out;
+}
+.success 
+{
+    color: gold;
+    text-shadow: 0 0 5px gold;
+}
+.error 
+{
+    color: red;
+    text-shadow: 0 0 5px darkred;
+    animation: shake 0.5s;
+}
+@keyframes shake 
+{
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+
